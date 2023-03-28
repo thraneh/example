@@ -1,0 +1,6 @@
+[submodule "roq-monitor"]
+	path = roq-monitor
+	url = https://github.com/roq-trading/roq-monitor
+[submodule "roq-gateways"]
+	path = roq-gateways
+	url = https://github.com/roq-trading/roq-gateways

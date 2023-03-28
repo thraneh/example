@@ -1,0 +1,46 @@
+---
+container:
+  solution: docker
+prometheus:
+  scrape_configs:
+    - cme
+roq:
+  user: ansible
+  group: ansible
+  common:
+    auth_keys:
+      public_key: YOUR_ROQ_PUBLIC_KEY
+      secret_key: YOUR_ROQ_SECRET_KEY
+    flags:
+      loop_sleep: 500ns
+      loop_timer_freq: 2500ns
+      event_log_iso_week: false
+      event_log_symlink: true
+      cache_mbp_checksum: false
+      cache_all_reference_data: true
+    service:
+      start: '*-*-* 00:01:00'
+      stop: '*-*-* 23:59:00'
+      restart: 'no'
+  gateways:
+    cme:
+      package: roq-cme
+      logging:
+        verbosity: 0
+      environment: prod
+      flags:
+        multicast_channel_ids: 344
+        multicast_config_file: /opt/conda/share/roq-cme/prod/config.xml
+        multicast_local_interface: 1.2.3.4
+      config:
+        symbols: Z[TFNB][HMUZ][0-9]  # futures
+        accounts:
+          A1:
+            login: YOUR_CME_PUBLIC_KEY
+            secret: YOUR_CME_SECRET_KEY
+            symbols: .*
+        users:
+          trader:
+            password: secret
+            symbols: ZNM3
+            accounts: A1
